@@ -214,3 +214,7 @@ def xception(pretrained=False,**kwargs):
 
 if __name__  == '__main__':
     net = xception(pretrained = True)
+<<<<<<< HEAD
+=======
+    # print(net)
+>>>>>>> 086d68fd8f5a7f6a6ad20c2c3315ba483db31895

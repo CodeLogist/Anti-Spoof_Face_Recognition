@@ -5,15 +5,35 @@ import torch
 from torchvision import datasets, models,transforms
 import torch.nn as nn
 class BasicModule(torch.nn.Module):
+<<<<<<< HEAD
+=======
+   '''
+   封装了nn.Module，主要提供save和load两个方法
+   '''
+>>>>>>> 086d68fd8f5a7f6a6ad20c2c3315ba483db31895
    def __init__(self,opt=None):
        super(BasicModule,self).__init__()
        self.model_name = str(type(self)) # 模型的默认名字
 
    def load(self, path):
+<<<<<<< HEAD
        
        self.load_state_dict(torch.load(path,map_location=torch.device('cpu')))
 
    def save(self,name=None):
+=======
+       '''
+       可加载指定路径的模型
+       '''
+       self.load_state_dict(torch.load(path,map_location=torch.device('cpu')))
+
+   def save(self,name=None):
+       '''
+       保存模型，默认使用“模型名字+时间”作为文件名，
+       如AlexNet_0710_23:57:29.pth
+       '''
+
+>>>>>>> 086d68fd8f5a7f6a6ad20c2c3315ba483db31895
        if name is None:
            prefix = '/checkpoints/' + self.model_name + '_'
            name = time.strftime(prefix + '%m%d_%H:%M:%S.pth')
