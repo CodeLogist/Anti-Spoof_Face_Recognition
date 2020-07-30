@@ -1,15 +1,9 @@
-print("API Called")
 from flask import Flask, jsonify, request
 import logging
 handler = logging.FileHandler('./app.log')  # errors logged to this file
 handler.setLevel(logging.ERROR)  # only log errors and above
-
 import face_recognition
-print("Face_recognition imported")
-
 import torch
-print("Torch imported")
-
 import urllib
 import models
 import cv2
@@ -105,21 +99,10 @@ def demo(img):
 @server.route("/", methods = ["POST"])
 def func():
     data = request.json
-    #Call the the function to detect face:
-    # print("#"*1000)
-    # urls = [
-    #   "https://bekurovimages.s3.amazonaws.com/boys/20180829_161859_HDR.jpg",
-    #   "https://bekurovimages.s3.amazonaws.com/boys/54c8536d45ede.jpg",
-    #   "https://bekurovimages.s3.amazonaws.com/boys/56b8e9a793c80.jpg",
-    #   "https://bekurovimages.s3.amazonaws.com/boys/Aron+Hersh+Milech2.jpg"
-    # ]
-    # unknown_url = "https://bekurovimages.s3.amazonaws.com/boys/Avrum+Yakov+Klein2.jpg"
     urls = list(data["urls"])
     unknown_url = data["unknown_url"]
-    # isValidated, error, msg = validate_face(urls,unknown_url)
-
+    
     faces = 0
-
 
     try:
     	resp = urllib.request.urlopen(unknown_url)
@@ -129,16 +112,7 @@ def func():
     except:
         return jsonify(statusCode = 200, body= "Error",error= 5,message= "Unknown Image is not accessible",exception = "A URL not accessible")
 
-    # cv2.imshow("Image",image)
-    # cv2.waitKey(0)
-
-    # frame = cv2.imread("data/fake_pic.jpeg")
-
     frame = imutils.resize(frame, width=600)
-
-    # cv2.imshow("Frame",frame)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
 
     (h, w) = frame.shape[:2]
     blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0,(300, 300), (104.0, 177.0, 123.0))
@@ -149,10 +123,8 @@ def func():
     for i in range(0, detections.shape[2]):
 
         confidence = detections[0, 0, i, 2]
-        # print("Faces: ",faces)
         if confidence > 0.6:
             faces = faces+1
-
             if(faces>1):
                 break
 
@@ -212,10 +184,6 @@ def func():
 
             attack_prob = demo(img)
 
-            # cv2.imshow("Image",img)
-            # cv2.waitKey(0)
-            # # cv2.destroyAllWindows()
-
             true_prob = 1 - attack_prob
             if attack_prob > thresh:
                 label = 'fake'
@@ -242,9 +210,6 @@ def func():
         message = "Only 1 Face Detected but is fake"
 
     elif(faces==1 and label == 'true'):
-
-        # resp = urllib.request.urlopen(unknown_url)
-        # image = np.array(Image.open(BytesIO(resp.read())))
 
         boxes = face_recognition.face_locations(image)
 

@@ -214,4 +214,3 @@ def xception(pretrained=False,**kwargs):
 
 if __name__  == '__main__':
     net = xception(pretrained = True)
-    # print(net)
