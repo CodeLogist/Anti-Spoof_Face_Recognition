@@ -1,6 +1,6 @@
-flask
 gunicorn
 opencv-python
+flask
 urllib3
 numpy
 imutils
