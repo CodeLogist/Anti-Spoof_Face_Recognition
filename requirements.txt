@@ -1,0 +1,6 @@
+flask
+gunicorn
+opencv-python
+urllib3
+numpy
+imutils
