@@ -4,5 +4,5 @@ opencv-python
 urllib3
 numpy
 imutils
-torch
 face_recognition
+torch
